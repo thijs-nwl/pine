@@ -1,0 +1,23 @@
+study("TDI")
+lengthrsi=input(13)
+src=close
+lengthband=input(34)
+lengthrsipl=input(2)
+lengthtradesl=input(7)
+
+r=rsi(src, lengthrsi)
+ma=sma(r,lengthband)
+offs=(1.6185 * stdev(r, lengthband))
+up=ma+offs
+dn=ma-offs
+mid=(up+dn)/2
+mab=sma(r, lengthrsipl)
+mbb=sma(r, lengthtradesl)
+
+hline(32)
+hline(68)
+upl=plot(up, color=blue)
+dnl=plot(dn, color=blue)
+midl=plot(mid, color=yellow, linewidth=2)
+plot(mab, color=green, linewidth=2)
+plot(mbb, color=red, linewidth=2)
