@@ -1,0 +1,39 @@
+//@version=3
+study("Trading Sessions", overlay = true)
+
+//Boxes//
+asSess = input(title="Asian Session", type=session, defval="2030-0200")
+asShow = input(title="Display AS session?", type=bool, defval=true)  
+asCol = #ACE7F0     //blue
+
+euSess = input(title="Asian Session", type=session, defval="0330-0900")
+euShow = input(title="Display EU session?", type=bool, defval=true) 
+euCol = #00C770     //green
+
+usSess = input(title="Asian Session", type=session, defval="0930-1630")
+usShow = input(title="Display US session?", type=bool, defval=true)
+usCol = #E23425     //red
+
+InSession(sess) => na(time(period, sess)) == false
+
+bgcolor(color=InSession(asSess)[1] and asShow ? asCol : na,
+     title="Asia", transp=90)
+bgcolor(color=InSession(euSess)[1] and euShow ? euCol : na,
+     title="London", transp=90)
+bgcolor(color=InSession(usSess)[1] and usShow ? usCol : na,
+     title="New York", transp=90)
+//----//
+//YH and YL//
+D_High = security(tickerid, 'D', high[1], false, true) 
+D_Low = security(tickerid, 'D', low[1], false, true) 
+
+plot(isintraday ? D_High : na, title="Daily High",style=line, color=red,linewidth=1) 
+plot(isintraday ? D_Low : na, title="Daily Low",style=line, color=red,linewidth=1) 
+//----//
+//EMA's//
+plot(ema(close, 5), linewidth= 2, color=yellow)
+plot(ema(close, 13), linewidth= 2, color=red)
+plot(ema(close, 50), linewidth= 2, color=#0C9E9E)
+plot(ema(close, 200), linewidth= 2, color=white)
+plot(ema(close, 800), linewidth= 2, color=blue)
+//----//
